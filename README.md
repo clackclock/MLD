@@ -1,2 +1,3 @@
-# MLD
-making life easier one mod at a time
+# Mandarin Learning Discovery
+
+Basically the learning tools for the classes. Might make a mod for her website
