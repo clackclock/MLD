@@ -61,15 +61,18 @@
       margin:10%;
       margin-top: 3%;
       max-width: 100%;
+
+      font-family: Arial, Helvetica, sans-serif;
+      color: #5f0451;
     }
     hr{
       width: 70%;
     }
 
     #logo img{
-      width:50px;
-      height:50px;
-      margin:1%;
+      width:90px;
+      height:90px;
+      margin-left:1%;
     }
     .教室{
       display: flex;
@@ -77,11 +80,10 @@
       justify-content: start;
       margin:5%;
     }
-    .name{
+    /* .name{
       width: 30px;
       height: 30px;
-
-    }
+    } */
 
     .tab {
       float: left;
@@ -146,19 +148,20 @@
   <body>
     <header>
       <div id = "logo">
-        <img src = "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg">
+        <!-- <img src = "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"> -->
+        <img src = "data/1000001025.webp" alt = "MLD_Logo">
       </div>
     </header>
 
     <main>
       <div class = tab>
-        <button class = "tablinks" onclick="openGroup(event, 'g1')" id ="defaultOpen"> Group 1 </button>
-        <button class = "tablinks" onclick="openGroup(event, 'g2')"> Group 2 </button>
+        <button class = "tablinks" onclick="openGroup(event, 'g1')" id ="defaultOpen"> Main </button>
+        <button class = "tablinks" onclick="openGroup(event, 'g2')"> Walk-In </button>
       </div>
 
       <div class = "tabcontent"> <h1>Select A Group</h1></div>
 
-      <div id = "g1" class = "tabcontent"  >
+      <div id = "g1" class = "tabcontent" >
         <table>
           <tr>
             <th>Name | 名字</th>
@@ -167,7 +170,7 @@
             <th>Check Out</th>
           </tr>
           <tr>
-            <th>None</th>
+            <th class = "name"> None </th>
             <th><input type="checkbox" value="Present"></th>
             <th><input type="time" name="checkIn"></th>
             <th><input type="time" name="checkOut"></th>
@@ -184,12 +187,13 @@
             <th>Check Out</th>
           </tr>
           <tr>
-            <th>None2</th>
+            <th><input type="text" name="student"></th>
             <th><input type="checkbox" value="Present"></th>
             <th><input type="time" name="checkIn"></th>
             <th><input type="time" name="checkOut"></th>
           </tr>
         </table>
+        <button id = "add">Add Student</button>
       </div>
       
     </main>
