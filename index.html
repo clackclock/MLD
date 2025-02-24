@@ -6,12 +6,32 @@
     <meta name="viewport" content="width = device-width, initial-scale = 1" />
   </head>
   <script>
+    function loadStudents(){
+
+    }
+    
     function printDiv() {
       var divToPrint = document.getElementById('areaToPrint');
       newWin = window.open("");
       newWin.document.write(divToPrint.outerHTML);
       newWin.print();
       newWin.close();
+    }
+    
+    function addStudent(){
+      var table = document.getElementById("walkIn");
+      var mTable = document.getElementById("main");
+      var row = table.insertRow(1);
+
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      // var cell4 = row.insertCell(3);
+
+      cell1.innerHTML = "<input style = 'width:60px' type='text' name='student'>";
+      // cell2.innerHTML = "<input type='checkbox' value='Present'>";
+      cell2.innerHTML = "<input type='time' name='checkIn'>";
+      cell3.innerHTML = "<input type='time' name='checkOut'>";
     }
 
     function openGroup(evt, groupNum) {
@@ -64,6 +84,7 @@
 
       font-family: Arial, Helvetica, sans-serif;
       color: #5f0451;
+
     }
     hr{
       width: 70%;
@@ -90,7 +111,8 @@
       border: 1px solid #ccc;
       background-color:rgb(159, 0, 0);
       width: 30%;
-      height: 300px;
+      /* height: 300px; */
+      height: auto;
     }
     /* Style the buttons inside the tab */
     .tab button {
@@ -123,6 +145,10 @@
       border-left: none;
       height: 300px;
 
+      /* width:100%;*/
+      /* width: fit-content;  */
+
+      height: fit-content;
     }
 
     #g1, #g2{
@@ -139,9 +165,53 @@
       border: 1px solid #dddddd;
       text-align: left;
       padding: 8px;
+
     }
     tr:nth-child(even) {
       background-color: #dddddd;
+    }
+
+    /* CSS */
+    .button-30 {
+      align-items: center;
+      appearance: none;
+      background-color: #FCFCFD;
+      border-radius: 4px;
+      border-width: 0;
+      box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+      box-sizing: border-box;
+      color: #36395A;
+      cursor: pointer;
+      display: inline-flex;
+      font-family: "JetBrains Mono",monospace;
+      height: 48px;
+      justify-content: center;
+      line-height: 1;
+      list-style: none;
+      overflow: hidden;
+      padding-left: 16px;
+      padding-right: 16px;
+      position: relative;
+      text-align: left;
+      text-decoration: none;
+      transition: box-shadow .15s,transform .15s;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      white-space: nowrap;
+      will-change: box-shadow,transform;
+      font-size: 18px;
+    }
+    .button-30:focus {
+      box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    }
+    .button-30:hover {
+      box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+      transform: translateY(-2px);
+    }
+    .button-30:active {
+      box-shadow: #D6D6E7 0 3px 7px inset;
+      transform: translateY(2px);
     }
   </style>
   
@@ -161,8 +231,8 @@
 
       <div class = "tabcontent"> <h1>Select A Group</h1></div>
 
-      <div id = "g1" class = "tabcontent" >
-        <table>
+      <div id = "g1" class = "tabcontent"  >
+        <table id = "main">
           <tr>
             <th>Name | 名字</th>
             <th>Present or Absent?</th>
@@ -176,24 +246,26 @@
             <th><input type="time" name="checkOut"></th>
           </tr>
         </table>
+
+        <!-- <button class="button-30" onclick="printDiv()"> Print </button> -->
       </div>
 
       <div class = "tabcontent" id = "g2">
-        <table>
+        <table id = "walkIn">
           <tr>
             <th>Name | 名字</th>
-            <th>Present or Absent?</th>
             <th>Check In</th>
             <th>Check Out</th>
           </tr>
           <tr>
-            <th><input type="text" name="student"></th>
-            <th><input type="checkbox" value="Present"></th>
+            <th><input style = "width:60px" type="text" name="student"></th>
             <th><input type="time" name="checkIn"></th>
             <th><input type="time" name="checkOut"></th>
           </tr>
         </table>
-        <button id = "add">Add Student</button>
+
+        <button class="button-30" id ="add" onclick="addStudent()">+</button>
+        <!-- <button class="button-30" onclick="printDivpt2()"> Print </button> -->
       </div>
       
     </main>
