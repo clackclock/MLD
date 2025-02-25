@@ -1,21 +1,57 @@
 <!DOCTYPE html>
 
-<html>
+<html lang = "en">
   <head>
     <title>Attendance Record</title>
     <meta name="viewport" content="width = device-width, initial-scale = 1" />
   </head>
-  <script>
+  <script type = "module">
+    // import data from '../data/names.json' assert { type: 'json' };
+    // console.log(data);
     function loadStudents(){
+      fetch('/data/names.json')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();  
+        })
+        // data => console.log(data.Names)
+        .then(data => {
+          for(var i = 0; i < data.Names.length; i++){
+            var mTable = document.getElementById("main");
+            var row = mTable.insertRow(i+1);
 
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+
+            cell1.innerHTML = " " + data.Names[i].n + " ";
+            cell2.innerHTML = "<input type='checkbox' value='Present'>";
+            cell3.innerHTML = "<input type='time' name='checkIn'>";
+            cell4.innerHTML = "<input type='time' name='checkOut'>";
+          };
+        })  
+        .catch(error => console.error('Failed to fetch data:', error)); 
     }
-    
+    loadStudents();
+  </script>
+  <script >
     function printDiv() {
       var divToPrint = document.getElementById('areaToPrint');
       newWin = window.open("");
       newWin.document.write(divToPrint.outerHTML);
       newWin.print();
       newWin.close();
+    }
+    function printer(){
+      // var t = document.body;
+      // newWin = window.open("");
+      // newWin.document.write(t.innerHTML);
+      // newWin.print();
+      // newWin.close();
+      window.print();
     }
     
     function addStudent(){
@@ -48,7 +84,7 @@
       evt.currentTarget.className += " active";
     }
 
-    document.getElementById("defaultOpen").click();
+    // document.getElementById("defaultOpen").click();
   </script>
   <style>
     * {box-sizing: border-box;}
@@ -61,7 +97,8 @@
       overflow-y: scroll;
     }
     header{
-
+      display: flex;
+      flex-direction: row;
       z-index: 50;
       --above-all-in-container: 10000;
 
@@ -90,6 +127,15 @@
       width: 70%;
     }
 
+    header {
+      justify-content:space-between;
+    }
+    #info{
+      display: flex;
+      flex-direction: column;
+      font-size: xx-large;
+      align-items: center;
+    }
     #logo img{
       width:90px;
       height:90px;
@@ -126,7 +172,7 @@
       text-align: left;
       cursor: pointer;
       transition: 0.3s;
-      font-size: 17px;
+      font-size: 25px;
     }
     /* Change background color of buttons on hover */
     .tab button:hover {
@@ -151,6 +197,10 @@
       height: fit-content;
     }
 
+    .landing{
+      height: 300px;
+    }
+
     #g1, #g2{
       display: none;
     }
@@ -160,6 +210,7 @@
       border-collapse: collapse;
       width: 100%;
       margin-top:1%;
+      margin-bottom: 1%;
     }
     td, th {
       border: 1px solid #dddddd;
@@ -201,6 +252,8 @@
       white-space: nowrap;
       will-change: box-shadow,transform;
       font-size: 18px;
+
+      margin-bottom: 2%;
     }
     .button-30:focus {
       box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
@@ -213,6 +266,12 @@
       box-shadow: #D6D6E7 0 3px 7px inset;
       transform: translateY(2px);
     }
+
+    @media only print {
+      footer, header, .sidebar {
+        display:none;
+      }
+    }
   </style>
   
   <body>
@@ -221,15 +280,19 @@
         <!-- <img src = "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"> -->
         <img src = "data/1000001025.webp" alt = "MLD_Logo">
       </div>
+      <div id = "info">
+        <a><span>&#9743;</span></a>
+        <a><span>&#9993;</span></a>
+      </div>
     </header>
 
     <main>
       <div class = tab>
-        <button class = "tablinks" onclick="openGroup(event, 'g1')" id ="defaultOpen"> Main </button>
-        <button class = "tablinks" onclick="openGroup(event, 'g2')"> Walk-In </button>
+        <button class = "tablinks" onclick="openGroup(event, 'g1')" id ="defaultOpen"><span>&#10030;</span> Class List </button>
+        <button class = "tablinks" onclick="openGroup(event, 'g2')"><span>&#10030;</span> Walk-In </button>
       </div>
 
-      <div class = "tabcontent"> <h1>Select A Group</h1></div>
+      <div class = "tabcontent landing"> <h1>Select A Group</h1></div>
 
       <div id = "g1" class = "tabcontent"  >
         <table id = "main">
@@ -247,7 +310,7 @@
           </tr>
         </table>
 
-        <!-- <button class="button-30" onclick="printDiv()"> Print </button> -->
+        <button class="button-30" onclick="printer()"> Print </button>
       </div>
 
       <div class = "tabcontent" id = "g2">
@@ -258,14 +321,14 @@
             <th>Check Out</th>
           </tr>
           <tr>
-            <th><input style = "width:60px" type="text" name="student"></th>
+            <th><input style = "width:90px" type="text" name="student"></th>
             <th><input type="time" name="checkIn"></th>
             <th><input type="time" name="checkOut"></th>
           </tr>
         </table>
-
+        
+        <button class="button-30" onclick="printer()"> Print </button>
         <button class="button-30" id ="add" onclick="addStudent()">+</button>
-        <!-- <button class="button-30" onclick="printDivpt2()"> Print </button> -->
       </div>
       
     </main>
