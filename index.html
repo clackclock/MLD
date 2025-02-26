@@ -6,10 +6,10 @@
     <meta name="viewport" content="width = device-width, initial-scale = 1" />
   </head>
   <script type = "module">
-    // import data from '../data/names.json' assert { type: 'json' };
+    //import data from '../JSON/names.json' assert { type: 'json' };
     // console.log(data);
     function loadStudents(){
-      fetch('/data/names.json')
+      fetch('/JSON/names.json')
         .then(response => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
