@@ -8,6 +8,31 @@
   </head>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   
+  <script>
+    let cdataURL = '/names.json';
+    $.ajax({
+        url: cdataURL,
+        contentType: "application/json",
+        data: JSON.stringify("{" + cdataURL + "}"),
+        dataType: "json"
+    })
+    .done(function(data){
+      for(var i = 0; i < data.Names.length; i++){
+        var mTable = document.getElementById("main");
+        var row = mTable.insertRow(i+1);
+
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+
+        cell1.innerHTML = " " + data.Names[i].n + " ";
+        cell2.innerHTML = "<input type='checkbox' value='Present'>";
+        cell3.innerHTML = "<input type='time' name='checkIn'>";
+        cell4.innerHTML = "<input type='time' name='checkOut'>";
+      };
+    });
+  </script>
   <script type = "module">
     // import data from '../names.json' assert { type: 'json' };
 
@@ -39,26 +64,6 @@
     //     .catch(error => console.error('Failed to fetch data:', error)); 
     // }
     // loadStudents();
-    function loadStudents(){
-      const s = '{"Names": [ {"n": "Bing Ren"},{"n": "陈如武"},{"n": "Clark"},{"n": "Cora"},{"n": "Eliza"},{"n": "Farren"},{"n": "Isabella"},{"n": "Jackson"},{"n": "Jasper"},{"n": "Kylie"},{"n": "Mei"},{"n": "Michelle"},{"n": "Penelope"},{"n": "睿馨"},{"n": "Sofie"},{"n": "Steven"},{"n": "Tai"},{"n": "Yujia"}]}';
-      const l = JSON.parse(s);
-      
-      for(var i = 0; i < l.Names.length; i++){
-        var mTable = document.getElementById("main");
-        var row = mTable.insertRow(i+1);
-
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-
-        cell1.innerHTML = " " + l.Names[i].n + " ";
-        cell2.innerHTML = "<input type='checkbox' value='Present'>";
-        cell3.innerHTML = "<input type='time' name='checkIn'>";
-        cell4.innerHTML = "<input type='time' name='checkOut'>";
-      }
-    }
-    loadStudents();
   </script>
   <script >
     function printDiv() {
