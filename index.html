@@ -9,7 +9,7 @@
     // import data from '../data/names.json' assert { type: 'json' };
     // console.log(data);
     function loadStudents(){
-      fetch('/data/names.json')
+      fetch('../data/names.json')
         .then(response => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
