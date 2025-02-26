@@ -1,22 +1,13 @@
 {
     "Names": [
-        {"n": "Bing Ren"},
-        {"n": "陈如武"},
-        {"n": "Clark"},
-        {"n": "Cora"},
-        {"n": "Eliza"},
-        {"n": "Farren"},
-        {"n": "Isabella"},
-        {"n": "Jackson"},
-        {"n": "Jasper"},
-        {"n": "Kylie"},
-        {"n": "Mei"},
-        {"n": "Michelle"},
-        {"n": "Penelope"},
-        {"n": "睿馨"},
-        {"n": "Sofie"},
-        {"n": "Steven"},
-        {"n": "Tai"},
-        {"n": "Yujia"}
+        {"n": "Bing Ren"},{"n": "陈如武"},
+        {"n": "Clark"},{"n": "Cora"},
+        {"n": "Eliza"},{"n": "Farren"},
+        {"n": "Isabella"},{"n": "Jackson"},
+        {"n": "Jasper"},{"n": "Kylie"},
+        {"n": "Mei"},{"n": "Michelle"},
+        {"n": "Penelope"},{"n": "睿馨"},
+        {"n": "Sofie"},{"n": "Steven"},
+        {"n": "Tai"},{"n": "Yujia"}
     ]
 }

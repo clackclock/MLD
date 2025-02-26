@@ -4,38 +4,66 @@
   <head>
     <title>Attendance Record</title>
     <meta name="viewport" content="width = device-width, initial-scale = 1" />
+    <meta charset="utf-8">
   </head>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  
+  <script>
+    let cdataURL = '/names.json';
+    $.ajax({
+        url: cdataURL,
+        contentType: "application/json",
+        data: JSON.stringify("{" + cdataURL + "}"),
+        dataType: "json"
+    })
+    .done(function(data){
+      for(var i = 0; i < data.Names.length; i++){
+        var mTable = document.getElementById("main");
+        var row = mTable.insertRow(i+1);
+
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+
+        cell1.innerHTML = " " + data.Names[i].n + " ";
+        cell2.innerHTML = "<input type='checkbox' value='Present'>";
+        cell3.innerHTML = "<input type='time' name='checkIn'>";
+        cell4.innerHTML = "<input type='time' name='checkOut'>";
+      };
+    });
+  </script>
   <script type = "module">
-    //import data from '../names.json' assert { type: 'json' };
-    // console.log(data);
-    function loadStudents(){
-      fetch('/names.json')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();  
-        })
-        // data => console.log(data.Names)
-        .then(data => {
-          for(var i = 0; i < data.Names.length; i++){
-            var mTable = document.getElementById("main");
-            var row = mTable.insertRow(i+1);
+    // import data from '../names.json' assert { type: 'json' };
 
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            var cell3 = row.insertCell(2);
-            var cell4 = row.insertCell(3);
+    // function loadStudents(){
+    //   fetch('/names.json')
+    //     .then(response => {
+    //       if (!response.ok) {
+    //         throw new Error(`HTTP error! Status: ${response.status}`);
+    //       }
+    //       return response.json();  
+    //     })
+    //     // data => console.log(data.Names)
+    //     .then(data => {
+    //       for(var i = 0; i < data.Names.length; i++){
+    //         var mTable = document.getElementById("main");
+    //         var row = mTable.insertRow(i+1);
 
-            cell1.innerHTML = " " + data.Names[i].n + " ";
-            cell2.innerHTML = "<input type='checkbox' value='Present'>";
-            cell3.innerHTML = "<input type='time' name='checkIn'>";
-            cell4.innerHTML = "<input type='time' name='checkOut'>";
-          };
-        })  
-        .catch(error => console.error('Failed to fetch data:', error)); 
-    }
-    loadStudents();
+    //         var cell1 = row.insertCell(0);
+    //         var cell2 = row.insertCell(1);
+    //         var cell3 = row.insertCell(2);
+    //         var cell4 = row.insertCell(3);
+
+    //         cell1.innerHTML = " " + data.Names[i].n + " ";
+    //         cell2.innerHTML = "<input type='checkbox' value='Present'>";
+    //         cell3.innerHTML = "<input type='time' name='checkIn'>";
+    //         cell4.innerHTML = "<input type='time' name='checkOut'>";
+    //       };
+    //     })  
+    //     .catch(error => console.error('Failed to fetch data:', error)); 
+    // }
+    // loadStudents();
   </script>
   <script >
     function printDiv() {
@@ -46,11 +74,6 @@
       newWin.close();
     }
     function printer(){
-      // var t = document.body;
-      // newWin = window.open("");
-      // newWin.document.write(t.innerHTML);
-      // newWin.print();
-      // newWin.close();
       window.print();
     }
     
@@ -64,7 +87,7 @@
       var cell3 = row.insertCell(2);
       // var cell4 = row.insertCell(3);
 
-      cell1.innerHTML = "<input style = 'width:60px' type='text' name='student'>";
+      cell1.innerHTML = "<input style = 'width:90px' type='text' name='student'>";
       // cell2.innerHTML = "<input type='checkbox' value='Present'>";
       cell2.innerHTML = "<input type='time' name='checkIn'>";
       cell3.innerHTML = "<input type='time' name='checkOut'>";
@@ -84,7 +107,6 @@
       evt.currentTarget.className += " active";
     }
 
-    // document.getElementById("defaultOpen").click();
   </script>
   <style>
     * {box-sizing: border-box;}
@@ -101,6 +123,7 @@
       flex-direction: row;
       z-index: 50;
       --above-all-in-container: 10000;
+      justify-content:space-between;
 
       overflow: hidden;
       padding: 20px 10px;
@@ -111,9 +134,7 @@
       background-color: rgb(255, 255, 255);
       display: flex;
       flex-direction: row;
-      /* outline-style: solid;
-      outline-width: 10px;
-      outline-color: rgb(159, 0, 0); */
+
       border-radius: 10px;
       margin:10%;
       margin-top: 3%;
@@ -127,9 +148,6 @@
       width: 70%;
     }
 
-    header {
-      justify-content:space-between;
-    }
     #info{
       display: flex;
       flex-direction: column;
@@ -147,10 +165,6 @@
       justify-content: start;
       margin:5%;
     }
-    /* .name{
-      width: 30px;
-      height: 30px;
-    } */
 
     .tab {
       float: left;
@@ -191,9 +205,6 @@
       border-left: none;
       height: 300px;
 
-      /* width:100%;*/
-      /* width: fit-content;  */
-
       height: fit-content;
     }
 
@@ -216,7 +227,6 @@
       border: 1px solid #dddddd;
       text-align: left;
       padding: 8px;
-
     }
     tr:nth-child(even) {
       background-color: #dddddd;
@@ -332,6 +342,5 @@
       </div>
       
     </main>
-
   </body>
 </html>
