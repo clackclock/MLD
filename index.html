@@ -7,58 +7,90 @@
     <meta charset="utf-8">
   </head>
   <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-  
-  <script type = "module">
-    // import data from '../names.json' assert { type: 'json' };
-
-    // function loadStudents(){
-    //   fetch('/names.json')
-    //     .then(response => {
-    //       if (!response.ok) {
-    //         throw new Error(`HTTP error! Status: ${response.status}`);
-    //       }
-    //       return response.json();  
-    //     })
-    //     // data => console.log(data.Names)
-    //     .then(data => {
-    //       for(var i = 0; i < data.Names.length; i++){
-    //         var mTable = document.getElementById("main");
-    //         var row = mTable.insertRow(i+1);
-
-    //         var cell1 = row.insertCell(0);
-    //         var cell2 = row.insertCell(1);
-    //         var cell3 = row.insertCell(2);
-    //         var cell4 = row.insertCell(3);
-
-    //         cell1.innerHTML = " " + data.Names[i].n + " ";
-    //         cell2.innerHTML = "<input type='checkbox' value='Present'>";
-    //         cell3.innerHTML = "<input type='time' name='checkIn'>";
-    //         cell4.innerHTML = "<input type='time' name='checkOut'>";
-    //       };
-    //     })  
-    //     .catch(error => console.error('Failed to fetch data:', error)); 
-    // }
-    // loadStudents();
+  <!-- import data from './names.json' assert { type: 'json' }; -->
+  <script>
     function loadStudents(){
-      const s = '{"Names": [ {"n": "Bing Ren"},{"n": "陈如武"},{"n": "Clark"},{"n": "Cora"},{"n": "Eliza"},{"n": "Farren"},{"n": "Isabella"},{"n": "Jackson"},{"n": "Jasper"},{"n": "Kylie"},{"n": "Mei"},{"n": "Michelle"},{"n": "Penelope"},{"n": "睿馨"},{"n": "Sofie"},{"n": "Steven"},{"n": "Tai"},{"n": "Yujia"}]}';
-      const l = JSON.parse(s);
-      
-      for(var i = 0; i < l.Names.length; i++){
-        var mTable = document.getElementById("main");
-        var row = mTable.insertRow(i+1);
+      fetch('./names.json')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Stringify the fetched data
+          const stringifiedData = JSON.stringify(data);
+          console.log('Stringified data:', stringifiedData);
+          
+          // Parse the stringified data
+          const parsedData = JSON.parse(stringifiedData);
+          console.log('Parsed data:', parsedData);
+          
+          // Load into table
+          if (parsedData && parsedData.Names && Array.isArray(parsedData.Names)) {
+            var mTable = document.getElementById("main");
+            for(var i = 0; i < parsedData.Names.length; i++){
+              var row = mTable.insertRow(i+1);
 
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
+              var cell1 = row.insertCell(0);
+              var cell2 = row.insertCell(1);
+              var cell3 = row.insertCell(2);
+              var cell4 = row.insertCell(3);
 
-        cell1.innerHTML = " " + l.Names[i].n + " ";
-        cell2.innerHTML = "<input type='checkbox' value='Present'>";
-        cell3.innerHTML = "<input type='time' name='checkIn'>";
-        cell4.innerHTML = "<input type='time' name='checkOut'>";
-      }
+              cell1.innerHTML = " " + parsedData.Names[i].n + " ";
+              cell2.innerHTML = "<input type='checkbox' value='Present'>";
+              cell3.innerHTML = "<input type='time' name='checkIn'>";
+              cell4.innerHTML = "<input type='time' name='checkOut'>";
+            }
+          } else {
+            console.error('Invalid data format in names.json');
+          }
+        })
+        .catch(error => console.error('Failed to load students:', error));
     }
+
+    function loadOldStudents(){
+      fetch('./names2.json')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Stringify the fetched data
+          const stringifiedData = JSON.stringify(data);
+          console.log('Stringified data:', stringifiedData);
+          
+          // Parse the stringified data
+          const parsedData = JSON.parse(stringifiedData);
+          console.log('Parsed data:', parsedData);
+          
+          // Load into table
+          if (parsedData && parsedData.Names && Array.isArray(parsedData.Names)) {
+            var mTable = document.getElementById("m2");
+            for(var i = 0; i < parsedData.Names.length; i++){
+              var row = mTable.insertRow(i+1);
+
+              var cell1 = row.insertCell(0);
+              var cell2 = row.insertCell(1);
+              var cell3 = row.insertCell(2);
+              var cell4 = row.insertCell(3);
+
+              cell1.innerHTML = " " + parsedData.Names[i].n + " ";
+              cell2.innerHTML = "<input type='checkbox' value='Present'>";
+              cell3.innerHTML = "<input type='time' name='checkIn'>";
+              cell4.innerHTML = "<input type='time' name='checkOut'>";
+            }
+          } else {
+            console.error('Invalid data format in names.json');
+          }
+        })
+        .catch(error => console.error('Failed to load students:', error));
+    }
+    
     loadStudents();
+    loadOldStudents();
   </script>
   <script >
     function printDiv() {
@@ -212,7 +244,7 @@
       height: 300px;
     }
 
-    #g1, #g2{
+    #g1, #g2, #g3, #g4{
       display: none;
     }
 
@@ -303,19 +335,21 @@
 
     <main>
       <div class = tab>
-        <button class = "tablinks" onclick="openGroup(event, 'g1')" id ="defaultOpen"><span>&#10030;</span> Class List </button>
-        <button class = "tablinks" onclick="openGroup(event, 'g2')"><span>&#10030;</span> Walk-In </button>
+        <button class = "tablinks" onclick="openGroup(event, 'g0')" id ="defaultOpen"><span>&#10030;</span> 小班 </button>
+        <button class = "tablinks" onclick="openGroup(event, 'g1')" id ="defaultOpen"><span>&#10030;</span> 中班 </button>
+        <button class = "tablinks" onclick="openGroup(event, 'g4')" id ="defaultOpen"><span>&#10030;</span> 大班 </button>
+        <button class = "tablinks" onclick="openGroup(event, 'g2')"><span>&#10030;</span> 新学生 </button>
       </div>
 
-      <div class = "tabcontent landing"> <h1>Select A Group</h1></div>
+      <div class = "tabcontent landing" id = "g0"> <h1>选一组</h1></div>
 
       <div id = "g1" class = "tabcontent"  >
         <table id = "main">
           <tr>
             <th>Name | 名字</th>
-            <th>Present or Absent?</th>
-            <th>Check In</th>
-            <th>Check Out</th>
+            <th>Present? |  出席</th>
+            <th>Check In | 到</th>
+            <th>Check Out | 离开</th>
           </tr>
           <tr>
             <th class = "name"> None </th>
@@ -328,12 +362,31 @@
         <button class="button-30" onclick="printer()"> Print </button>
       </div>
 
+      <div id = "g4" class = "tabcontent"  >
+        <table id = "m2">
+          <tr>
+            <th>Name | 名字</th>
+            <th>Present? |  出席</th>
+            <th>Check In | 到</th>
+            <th>Check Out | 离开</th>
+          </tr>
+          <tr>
+            <th class = "name"> None </th>
+            <th><input type="checkbox" value="Present"></th>
+            <th><input type="time" name="checkIn"></th>
+            <th><input type="time" name="checkOut"></th>
+          </tr>
+        </table>
+
+        <button class="button-30" onclick="printer()"> Print </button>
+      </div>
+      
       <div class = "tabcontent" id = "g2">
         <table id = "walkIn">
           <tr>
             <th>Name | 名字</th>
-            <th>Check In</th>
-            <th>Check Out</th>
+            <th>Check In | 到</th>
+            <th>Check Out | 离开</th>
           </tr>
           <tr>
             <th><input style = 'width:90px' type="text" name="student"></th>
